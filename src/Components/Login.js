@@ -1,9 +1,12 @@
 import React, { useState, useRef } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
+import { auth } from "../utils/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 const Login = () => {
   const [showSignIn, setSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  //const auth = getAuth();
   const email = useRef(null);
   const password = useRef(null);
   const fullName = useRef(null);
@@ -14,9 +17,31 @@ const Login = () => {
     const message = checkValidData(
       email.current.value,
       password.current.value,
-      fullName.current?.value
+      fullName.current?.value,
+      showSignIn
     );
     setErrorMessage(message);
+    if (message) return;
+    if (!showSignIn) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+          // ..
+        });
+    } else {
+    }
   };
   return (
     <div>

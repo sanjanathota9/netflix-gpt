@@ -1,4 +1,4 @@
-export const checkValidData = (email, password, fullname) => {
+export const checkValidData = (email, password, fullname, isSignInFlow) => {
   const emailPattern = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(
     email
   );
@@ -9,6 +9,7 @@ export const checkValidData = (email, password, fullname) => {
   const fullnamePattern = /^[a-zA-Z]+ [a-zA-Z]+$/.test(fullname);
   if (!emailPattern) return "Email ID is not valid";
   if (!passwordPattern) return "Password is not valid";
-  if (!fullnamePattern) return "FullName is not valid";
+
+  if (!fullnamePattern && !isSignInFlow) return "FullName is not valid";
   return null;
 };
