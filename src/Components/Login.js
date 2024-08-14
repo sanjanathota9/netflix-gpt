@@ -68,7 +68,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log("sign In", user);
+          console.log("sign In log", user);
           navigate("/browse");
         })
         .catch((error) => {

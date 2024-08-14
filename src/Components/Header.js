@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 const Header = () => {
   const navigate = useNavigate();
   const userInfo = useSelector((store) => store.user);
-  console.log("user data from store", userInfo);
+  console.log("user data from storee", userInfo);
   const handleSignout = () => {
     signOut(auth)
       .then(() => {
