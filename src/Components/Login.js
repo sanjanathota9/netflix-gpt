@@ -9,14 +9,13 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { bg_img } from "../utils/constants";
 const Login = () => {
   const [showSignIn, setSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const email = useRef(null);
   const password = useRef(null);
   const fullName = useRef(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const toggleSignInForm = () => {
     setSignInForm(!showSignIn);
@@ -39,7 +38,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
-          console.log(user);
           updateProfile(user, {
             displayName: fullName.current.value,
           })
@@ -48,7 +46,6 @@ const Login = () => {
               dispatch(
                 addUser({ Uid: uid, Email: email, displayName: displayName })
               );
-              navigate("/browse");
             })
             .catch((error) => {
               setErrorMessage(error);
@@ -68,8 +65,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log("sign In log", user);
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -82,10 +77,7 @@ const Login = () => {
     <div>
       <Header />
       <div className="absolute">
-        <img
-          alt="bg-img"
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/b2c3e95b-b7b5-4bb7-a883-f4bfc7472fb7/19fc1a4c-82db-4481-ad08-3a1dffbb8c39/IN-en-20240805-POP_SIGNUP_TWO_WEEKS-perspective_WEB_24a485f6-1820-42be-9b60-1b066f1eb869_large.jpg"
-        ></img>
+        <img alt="bg-img" src={bg_img}></img>
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
